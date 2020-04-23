@@ -313,14 +313,17 @@ namespace SFCScanBarcode
                 ResultStatus("RUN");
                 //Check SN Format
                 //if (sn.Length != SNFormat.Length || !Regex.IsMatch(sn.Replace(" ", "A"), newFormat))
-                if (!Regex.IsMatch(sn.Replace(" ", "A"), newFormat))
-                {
-                    //MessageBox.Show("ĐỊNH DẠNG SN SAI/SN规则错误");                    
-                    ResultStatus("FAIL");
-                    label4.Text = sn + ":ĐỊNH DẠNG SN SAI/SN规则错误";
-                    PwdConfirm();
-                    return;
-                }
+
+                //Haicomment
+                //if (!Regex.IsMatch(sn.Replace(" ", "A"), newFormat))
+               // {                  
+                   // ResultStatus("FAIL");
+                   // label4.Text = sn + ":ĐỊNH DẠNG SN SAI/SN规则错误";
+                  //  PwdConfirm();
+                   // return;
+                //}
+                //haiendcomment
+
                 //Check tblData Result
                 string sCheckResult = string.Format("select Result from tblData WITH(NOLOCK) where SN='{0}' and StationID={1} order by CreateTime desc", sn, cmbStation.SelectedValue);
                 DataTable dt1 = new DataTable();
@@ -419,10 +422,14 @@ namespace SFCScanBarcode
                 }
                 //check NI test result                
                 string sqlCheck = string.Format("select IsPass, PassLevel from T_SN_Test WITH(NOLOCK) where SN='{0}' and IsRepair = '3' order by [Time] desc", sn);
+                //YangJunHai add for check xing neng times 20200408
+                string sqlCheck2 = string.Format("select TestTime from T_TestTimeBySN WITH(NOLOCK) where SN='{0}'", sn);
                 DataTable dt = new DataTable();
+                DataTable dttesttime = new DataTable();
                 try
                 {
                     dt = SqlConn.sqlDataTable(sqlCheck);
+                    dttesttime = SqlConn.sqlDataTable(sqlCheck2);
                 }
                 catch (Exception ex)
                 {
@@ -439,32 +446,102 @@ namespace SFCScanBarcode
                 else if (dt.Rows.Count > 0)
                 {
                     int iResult = int.Parse(dt.Rows[0]["IsPass"].ToString());
-                    if (iResult == 1)
+                    int testTime = int.Parse(dttesttime.Rows[0]["TestTime"].ToString());
+                    if (cbType.Text.Trim() == "A")
                     {
-                        if (cbType.Text.Trim() != "") // 检查产品的档位
+                        if (testTime == 1)
                         {
-                            string pType = dt.Rows[0]["PassLevel"].ToString();
-                            //int i = pType.LastIndexOf("_") + 1;
-                            //pType = pType.Substring(i, pType.LastIndexOf(".txt") - i);
-                            //MessageBox.Show(pType);   
-                            if (pType.Trim() != cbType.Text.Trim())
+                            if (iResult == 1)
                             {
-                                label4.Text = sn + ":LOẠI HÀNG KHÔNG ĐÚNG/产品的档位错误 -- " + pType;
+                                if (cbType.Text.Trim() != "") // 检查产品的档位
+                                {
+                                    string pType = dt.Rows[0]["PassLevel"].ToString();
+                                    //int i = pType.LastIndexOf("_") + 1;
+                                    //pType = pType.Substring(i, pType.LastIndexOf(".txt") - i);
+                                    //MessageBox.Show(pType);   
+                                    if (pType.Trim() != cbType.Text.Trim())
+                                    {
+                                        label4.Text = sn + ":LOẠI HÀNG KHÔNG ĐÚNG/产品的档位错误 -- " + pType;
+                                        ResultStatus("FAIL");
+                                        PwdConfirm();
+                                        return;
+                                    }
+                                }
+                                pQty++;
+                                toolStripStatusLabel8.Text = pQty.ToString();
+                                ResultStatus("PASS");
+                            }
+                            else
+                            {
+                                label4.Text = sn + ":TÍNH NĂNG TEST NG/性能测试NG";
                                 ResultStatus("FAIL");
                                 PwdConfirm();
                                 return;
                             }
                         }
-                        pQty++;
-                        toolStripStatusLabel8.Text = pQty.ToString();
-                        ResultStatus("PASS");
+                        if (testTime > 1)
+                        {
+                            if (iResult == 1)
+                            {
+                                if (cbType.Text.Trim() != "") // 检查产品的档位
+                                {
+                                    string pType = dt.Rows[0]["PassLevel"].ToString();
+                                    //int i = pType.LastIndexOf("_") + 1;
+                                    //pType = pType.Substring(i, pType.LastIndexOf(".txt") - i);
+                                    //MessageBox.Show(pType);   
+                                    if (pType.Trim() != cbType.Text.Trim())
+                                    {
+                                        label4.Text = sn + ":LOẠI HÀNG KHÔNG ĐÚNG/产品的档位错误 -- " + pType;
+                                        ResultStatus("FAIL");
+                                        PwdConfirm();
+                                        return;
+                                    }
+                                }
+                                pQty++;
+                                toolStripStatusLabel8.Text = pQty.ToString();
+                                label4.Text = sn + ":TÍNH NĂNG TEST NG/性能测试NG";
+                                ResultStatus("FAIL");
+                                PwdConfirm();
+                                return;
+                            }
+                            else
+                            {
+                                label4.Text = sn + ":TÍNH NĂNG TEST NG/性能测试NG";
+                                ResultStatus("FAIL");
+                                PwdConfirm();
+                                return;
+                            }
+                        }
                     }
                     else
                     {
-                        label4.Text = sn + ":TÍNH NĂNG TEST NG/性能测试NG";
-                        ResultStatus("FAIL");
-                        PwdConfirm();
-                        return;
+                        if (iResult == 1)
+                        {
+                            if (cbType.Text.Trim() != "") // 检查产品的档位
+                            {
+                                string pType = dt.Rows[0]["PassLevel"].ToString();
+                                //int i = pType.LastIndexOf("_") + 1;
+                                //pType = pType.Substring(i, pType.LastIndexOf(".txt") - i);
+                                //MessageBox.Show(pType);   
+                                if (pType.Trim() != cbType.Text.Trim())
+                                {
+                                    label4.Text = sn + ":LOẠI HÀNG KHÔNG ĐÚNG/产品的档位错误 -- " + pType;
+                                    ResultStatus("FAIL");
+                                    PwdConfirm();
+                                    return;
+                                }
+                            }
+                            pQty++;
+                            toolStripStatusLabel8.Text = pQty.ToString();
+                            ResultStatus("PASS");
+                        }
+                        else
+                        {
+                            label4.Text = sn + ":TÍNH NĂNG TEST NG/性能测试NG";
+                            ResultStatus("FAIL");
+                            PwdConfirm();
+                            return;
+                        }
                     }
                 }
                 cQty++;
