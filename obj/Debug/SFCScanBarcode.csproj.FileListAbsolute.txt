@@ -1,0 +1,23 @@
+D:\Project\SFCScanBarcode\SFCScanBarcode\bin\Debug\SFCScanBarcode.exe.config
+D:\Project\SFCScanBarcode\SFCScanBarcode\bin\Debug\SFCScanBarcode.exe
+D:\Project\SFCScanBarcode\SFCScanBarcode\bin\Debug\SFCScanBarcode.pdb
+D:\Project\SFCScanBarcode\SFCScanBarcode\obj\Debug\SFCScanBarcode.Form1.resources
+D:\Project\SFCScanBarcode\SFCScanBarcode\obj\Debug\SFCScanBarcode.Properties.Resources.resources
+D:\Project\SFCScanBarcode\SFCScanBarcode\obj\Debug\SFCScanBarcode.csproj.GenerateResource.Cache
+D:\Project\SFCScanBarcode\SFCScanBarcode\obj\Debug\SFCScanBarcode.csproj.CoreCompileInputs.cache
+D:\Project\SFCScanBarcode\SFCScanBarcode\obj\Debug\SFCScanBarcode.exe
+D:\Project\SFCScanBarcode\SFCScanBarcode\obj\Debug\SFCScanBarcode.pdb
+D:\Project\SFCScanBarcode\SFCScanBarcode\obj\Debug\SFCScanBarcode.LotNoForm.resources
+D:\Project\SFCScanBarcode\SFCScanBarcode\obj\Debug\SFCScanBarcode.PwdForm.resources
+D:\Project\SFCScanBarcode\SFCScanBarcode\obj\Debug\SFCScanBarcode.csprojAssemblyReference.cache
+D:\MES-SFC\Vietnam SFC\SFCScanBarcode\SFCScanBarcode\bin\Debug\SFCScanBarcode.exe.config
+D:\MES-SFC\Vietnam SFC\SFCScanBarcode\SFCScanBarcode\bin\Debug\SFCScanBarcode.exe
+D:\MES-SFC\Vietnam SFC\SFCScanBarcode\SFCScanBarcode\bin\Debug\SFCScanBarcode.pdb
+D:\MES-SFC\Vietnam SFC\SFCScanBarcode\SFCScanBarcode\obj\Debug\SFCScanBarcode.Form1.resources
+D:\MES-SFC\Vietnam SFC\SFCScanBarcode\SFCScanBarcode\obj\Debug\SFCScanBarcode.LotNoForm.resources
+D:\MES-SFC\Vietnam SFC\SFCScanBarcode\SFCScanBarcode\obj\Debug\SFCScanBarcode.Properties.Resources.resources
+D:\MES-SFC\Vietnam SFC\SFCScanBarcode\SFCScanBarcode\obj\Debug\SFCScanBarcode.PwdForm.resources
+D:\MES-SFC\Vietnam SFC\SFCScanBarcode\SFCScanBarcode\obj\Debug\SFCScanBarcode.csproj.GenerateResource.cache
+D:\MES-SFC\Vietnam SFC\SFCScanBarcode\SFCScanBarcode\obj\Debug\SFCScanBarcode.csproj.CoreCompileInputs.cache
+D:\MES-SFC\Vietnam SFC\SFCScanBarcode\SFCScanBarcode\obj\Debug\SFCScanBarcode.exe
+D:\MES-SFC\Vietnam SFC\SFCScanBarcode\SFCScanBarcode\obj\Debug\SFCScanBarcode.pdb
