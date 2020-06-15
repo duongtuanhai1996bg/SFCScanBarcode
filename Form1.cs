@@ -439,7 +439,7 @@ namespace SFCScanBarcode
                 else if (dt.Rows.Count > 0)
                 {
                     int iResult = int.Parse(dt.Rows[0]["IsPass"].ToString());
-                    if (cbType.Text.Trim() == "A")
+                    if (cbType.Text.Trim() == "A+")
                     {
                         if(dt.Rows.Count == 1)
                         {
@@ -864,7 +864,7 @@ namespace SFCScanBarcode
         private void btnLotNo_Click(object sender, EventArgs e)
         {
             //MessageBox.Show(cmbModel.SelectedValue.ToString());
-            LotNoForm lotForm = new LotNoForm(this, txtScan, toolStripStatusLabel2, toolStripStatusLabel4, toolStripStatusLabel6, toolStripStatusLabel8, lvDetail);
+            LotNoForm lotForm = new LotNoForm(this, txtScan, toolStripStatusLabel2, toolStripStatusLabel4, toolStripStatusLabel6, toolStripStatusLabel8, lvDetail, cmbModel.Text);
             lotForm.StartPosition = FormStartPosition.CenterScreen;
             lotForm.Show();
             lotForm.TopMost = true;            
