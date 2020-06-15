@@ -19,7 +19,8 @@ namespace SFCScanBarcode
         ToolStripStatusLabel lblCurrentQty;
         ToolStripStatusLabel lblOK;
         ListView lv;
-        public LotNoForm(Form Frm, TextBox Tb, ToolStripStatusLabel LblLotNo, ToolStripStatusLabel LblLotQty, ToolStripStatusLabel LblCurrentQty, ToolStripStatusLabel LblOK, ListView LV)
+        string moDel;
+        public LotNoForm(Form Frm, TextBox Tb, ToolStripStatusLabel LblLotNo, ToolStripStatusLabel LblLotQty, ToolStripStatusLabel LblCurrentQty, ToolStripStatusLabel LblOK, ListView LV, string model)
         {
             InitializeComponent();
             frm = Frm;
@@ -29,6 +30,7 @@ namespace SFCScanBarcode
             lblCurrentQty = LblCurrentQty;
             lblOK = LblOK;
             lv = LV;
+            moDel = model;
         }
 
         private void btnConfirm_Click(object sender, EventArgs e)
@@ -44,6 +46,7 @@ namespace SFCScanBarcode
                 return;
             }
             //Check LotNo
+            
             string sql = string.Format("select ID, Qty, FinishQty, IsFinish, PassQty from tblLotNo where LotName='{0}'", txtLotName.Text.Trim());
             DataTable dt = new DataTable();
             try
@@ -84,11 +87,38 @@ namespace SFCScanBarcode
             catch (Exception ex2)
             {
                 MessageBox.Show(this, "Check LotNo Fail: " + ex2.Message);
-            }            
-            lblLotNo.Text = txtLotName.Text.Trim();
-            tb.Focus();
-            lv.Items.Clear();
-            this.Close();
+            }
+            //YangJunHai add check lot format 20200604
+            //MessageBox.Show(moDel);
+            string sqllot = string.Format("select ProductCode from T_SnFormat WITH(NOLOCK) where ProductName='{0}'", moDel);
+            DataTable dtlot = new DataTable();
+            try
+            {
+                dtlot = SqlConn.sqlDataTable(sqllot);
+                string lot = dtlot.Rows[0]["ProductCode"].ToString();
+                //string newlotname = lot.Replace("*", "");
+                // string[] listlotname = lot.Split('*');
+                // string newlotname = listlotname[0];
+                if (txtLotName.Text.Contains(lot))
+                {
+                    //MessageBox.Show("OKKKKKKKKKKKLA");
+                    lblLotNo.Text = txtLotName.Text.Trim();
+                    tb.Focus();
+                    lv.Items.Clear();
+                    this.Close();
+
+                }
+                else
+                {
+                    MessageBox.Show("SAI SỐ LÔ / 批次号错误！", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, "CheckSN connect Fail: " + ex.Message);
+                return;
+            }
+            //Hai add end
         }
 
         private void txtLotQty_KeyDown(object sender, KeyEventArgs e)
