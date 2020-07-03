@@ -350,7 +350,7 @@ namespace SFCScanBarcode
                 {
                     //check TQ test result
                     SqlConn.GetDbName = "sfcRelay";
-                    string TQCheck = string.Format("Select top 1 Result From T_SnCollection Where SN = '{0}' and Station='漏气测试'  order by ID desc", sn);
+                    string TQCheck = string.Format("Select Result From T_SnCollection Where SN = '{0}' and Station='漏气测试'  order by ID desc", sn);
                     DataTable dt2 = new DataTable();
                     try
                     {
@@ -368,7 +368,14 @@ namespace SFCScanBarcode
                         PwdConfirm();
                         return;
                     }
-                    else if (dt2.Rows.Count > 0)
+                    else if (dt2.Rows.Count == 1)
+                    {
+                        label4.Text = sn + ":DÒ KHÍ MỚI TEST 1 LẦN/数据只有一次";
+                        ResultStatus("FAIL");
+                        PwdConfirm();
+                        return;
+                    }
+                    else if (dt2.Rows.Count > 1)
                     {
                         string sResult = dt2.Rows[0]["Result"].ToString();
                         if (sResult != "OK")
@@ -628,7 +635,7 @@ namespace SFCScanBarcode
                 {
                     //check TQ test result
                     SqlConn.GetDbName = "sfcRelay";
-                    string TQCheck = string.Format("Select top 1 Result From T_SnCollection Where SN = '{0}' and Station='漏气测试'  order by ID desc", sn);
+                    string TQCheck = string.Format("Select top Result From T_SnCollection Where SN = '{0}' and Station='漏气测试'  order by ID desc", sn);
                     DataTable dt2 = new DataTable();
                     try
                     {
@@ -646,7 +653,14 @@ namespace SFCScanBarcode
                         PwdConfirm();
                         return;
                     }
-                    else if (dt2.Rows.Count > 0)
+                    else if (dt2.Rows.Count == 1)
+                    {
+                        label4.Text = sn + ":DÒ KHÍ MỚI TEST 1 LẦN/数据只有一次";
+                        ResultStatus("FAIL");
+                        PwdConfirm();
+                        return;
+                    }
+                    else if (dt2.Rows.Count > 1)
                     {
                         string sResult = dt2.Rows[0]["Result"].ToString();
                         if (sResult != "OK")
