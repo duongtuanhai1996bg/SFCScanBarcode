@@ -439,7 +439,7 @@ namespace SFCScanBarcode
                 else if (dt.Rows.Count > 0)
                 {
                     int iResult = int.Parse(dt.Rows[0]["IsPass"].ToString());
-                    if (cbType.Text.Trim() == "A")
+                    if (cbType.Text.Trim() == "A+")
                     {
                         if(dt.Rows.Count == 1)
                         {
@@ -586,7 +586,7 @@ namespace SFCScanBarcode
                 {
                     MessageBox.Show("LÔ NÀY ĐÃ ĐẦY/此批次已满");
                     ResultStatus("STANDBY");
-                    txtScan.Enabled = false;
+                    txtScan.Enabled = true;
                     return;
                 }
                 ResultStatus("RUN");
@@ -760,7 +760,7 @@ namespace SFCScanBarcode
                 {
                     MessageBox.Show("LÔ NÀY ĐÃ ĐẦY/此批次已满");
                     ResultStatus("STANDBY");
-                    txtScan.Enabled = false;
+                    txtScan.Enabled = true;
                     return;
                 }
                 ResultStatus("RUN");
@@ -788,7 +788,7 @@ namespace SFCScanBarcode
                     }
                 }
                 //check TQ test result
-                string sqlCheck = string.Format("Select top 1 Result From T_SnCollection Where SN = '{0}' and Station='漏气测试'  order by ID desc", sn);
+                string sqlCheck = string.Format("Select Result From T_SnCollection Where SN = '{0}' and Station='漏气测试'  order by ID desc", sn);
                 DataTable dt = new DataTable();
                 try
                 {
@@ -806,7 +806,14 @@ namespace SFCScanBarcode
                     PwdConfirm();
                     return;
                 }
-                else if (dt.Rows.Count > 0)
+                else if (dt.Rows.Count == 1)
+                {
+                    label4.Text = sn + ":DÒ KHÍ MỚI TEST 1 LẦN/数据只有一次";
+                    ResultStatus("FAIL");
+                    PwdConfirm();
+                    return;
+                }
+                else if (dt.Rows.Count > 1)
                 {
                     string sResult = dt.Rows[0]["Result"].ToString();
                     if (sResult == "OK")
