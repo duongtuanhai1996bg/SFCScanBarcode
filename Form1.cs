@@ -195,7 +195,7 @@ namespace SFCScanBarcode
 
         private void cmbStation_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (txtScan.Enabled == false && cmbProject.Text.Trim() != "" && cmbModel.Text.Trim() != "" && cbType.Text.Trim() != "")
+            if (txtScan.Enabled == false && cmbProject.Text.Trim() != "" && cmbModel.Text.Trim() != "" && cbType.Text.Trim() != "" && cblanjie.Text.Trim() != "")
             {
                 txtScan.Enabled = true;
                 txtScan.Focus();                
@@ -439,7 +439,7 @@ namespace SFCScanBarcode
                 else if (dt.Rows.Count > 0)
                 {
                     int iResult = int.Parse(dt.Rows[0]["IsPass"].ToString());
-                    if (cbType.Text.Trim() == "A+")
+                    if (cbType.Text.Trim() == cblanjie.Text.Trim())
                     {
                         if(dt.Rows.Count == 1)
                         {
@@ -916,7 +916,7 @@ namespace SFCScanBarcode
 
         private void cbType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (txtScan.Enabled == false && cmbProject.Text.Trim() != "" && cmbModel.Text.Trim() != "" && cbType.Text.Trim() != "")
+            if (txtScan.Enabled == false && cmbProject.Text.Trim() != "" && cmbModel.Text.Trim() != "" && cbType.Text.Trim() != "" && cblanjie.Text.Trim() != "")
             {
                 txtScan.Enabled = true;
                 txtScan.Focus();
@@ -946,6 +946,15 @@ namespace SFCScanBarcode
                 cbLQ.Hide();
                 cbAT.Hide();
                 SqlConn.GetDbName = "sfcRelay";
+            }
+        }
+
+        private void cblanjie_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (txtScan.Enabled == false && cmbProject.Text.Trim() != "" && cmbModel.Text.Trim() != "" && cbType.Text.Trim() != "" && cblanjie.Text.Trim() != "")
+            {
+                txtScan.Enabled = true;
+                txtScan.Focus();
             }
         }
     }
